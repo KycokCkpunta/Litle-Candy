@@ -11,7 +11,7 @@ func _ready():
 
 func _fixed_process(delta):
 	ticks+=1
-	if ticks >= 35 and dead == false:
+	if ticks >= 25 and dead == false:
 		ticks = 0
 		if randi()%2 == 1:
 			var obs = load("res://obstacles/"+str(randi()%6)+".scn").instance()

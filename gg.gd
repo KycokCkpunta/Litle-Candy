@@ -17,6 +17,8 @@ var velocity = Vector2()
 var on_air_time = 100
 var jumping = false
 
+var prev_jump = false
+
 
 func _fixed_process(delta):
 	var force = Vector2(0, GRAVITY)
@@ -49,8 +51,9 @@ func _fixed_process(delta):
 	velocity += force*delta
 
 	var motion = velocity*delta
-
-	motion = move(motion)
+	
+	if get_node("/root/global").dead == false:
+		motion = move(motion)
 	
 	var floor_velocity = Vector2()
 	
@@ -75,12 +78,13 @@ func _fixed_process(delta):
 	if (jumping and velocity.y > 0):
 		jumping = false
 	
-	if (on_air_time < JUMP_MAX_AIRBORNE_TIME and jump and not jumping):
+	if (on_air_time < JUMP_MAX_AIRBORNE_TIME and jump and not prev_jump and not jumping):
 		velocity.y = -JUMP_SPEED
 		jumping = true
 	
 	on_air_time += delta
 
+	prev_jump = jump
 
 func _ready():
 	set_fixed_process(true)
