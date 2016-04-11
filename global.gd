@@ -21,6 +21,8 @@ func _fixed_process(delta):
 		score+=1
 		get_tree().get_current_scene().get_node("ui/score").set_text(str(score))
 		SPEED+=0.01
+	if get_tree().get_current_scene().get_node("ui/deadscreen/anim").get_current_animation() == "dead" and not get_tree().get_current_scene().get_node("ui/deadscreen/anim").is_playing():
+		get_tree().get_current_scene().can_revive = true
 
 func dead():
 	get_tree().get_current_scene().dead = true
@@ -35,6 +37,7 @@ func revive():
 	get_tree().get_current_scene().get_node("ui/noise").set_opacity(0.5)
 	get_tree().get_current_scene().get_node("ui/deadscreen/anim").play("none")
 	dead = false
+	get_tree().get_current_scene().can_revive = false
 	get_tree().get_current_scene().dead = false
 	score = 0
 	get_tree().get_current_scene().get_node("ui/score").set_text(str(score))

@@ -2,8 +2,8 @@
 extends Node2D
 
 var ticks = 0
-
 var dead = false
+var can_revive = false
 
 func _ready():
 	randomize()
@@ -19,6 +19,8 @@ func _fixed_process(delta):
 			if randi()%2 == 1:
 				obs.set_scale(Vector2(-1,1))
 			get_node("obstacles").add_child(obs)
+	if dead and can_revive and Input.is_action_pressed("jump"):
+		get_node("/root/global").revive()
 
 func _on_Area2D_body_enter( body ):
 	if body.get_name() == "gg":
